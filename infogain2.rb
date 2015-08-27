@@ -43,10 +43,8 @@ Dir::glob("/Users/kei/tweet/sampling/**/*.csv").each do |f|
       node = node.next
       while node.next do
         feat = node.feature.split(",")
-        if !(feat[0] == ("名詞"))
-          words << feat[6]
-          allwd << feat[6]
-        end
+        words << feat[6]
+        allwd << feat[6]
         node = node.next
       end
     end

@@ -2,7 +2,7 @@ require 'csv'
 require 'MeCab'
 require 'svm'
 
-featnum = 200
+featnum = 500
 
 me = MeCab::Tagger.new
 ave = [28, 25, 23, 27, 27]

@@ -1,0 +1,3 @@
+Dir::glob("/Users/kei/tweet/sampling/**/*.csv.gz").each do |f|
+  puts "#{f}: #{File::stat(f).size}"
+end
