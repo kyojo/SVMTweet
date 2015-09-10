@@ -2,10 +2,9 @@ require 'csv'
 require 'MeCab'
 require 'svm'
 
-featnum = 500
+featnum = 200
 
 me = MeCab::Tagger.new
-ave = [28, 25, 23, 27, 27]
 #0:op 1:co 2:ex 3:ag 4:ne
 pa = Array.new(5)
 bow_list = Array.new(5){Array.new()}
@@ -30,12 +29,8 @@ end
 Dir::glob("/Users/kei/tweet/sampling/**/*.csv").each do |f|
   pass = f.split("/")
   id = pass[5].to_i
-  #if id > 1000000
-    #next
-  #end
   words = []
   bow = Array.new(5){Array.new(featnum, 0)}
-  count = 0
 
   #words collect
   File.open(f) do |file|
@@ -54,7 +49,6 @@ Dir::glob("/Users/kei/tweet/sampling/**/*.csv").each do |f|
         feat = node.feature.split(",")
         words << feat[6]
         node = node.next
-        count += 1
       end
     end
   end
@@ -69,9 +63,6 @@ Dir::glob("/Users/kei/tweet/sampling/**/*.csv").each do |f|
         end
       end
     end
-  end
-  for a1 in bow
-    a1.map!{|item| item * 20000.0 / count.to_f}
   end
 
   #Output
@@ -91,5 +82,5 @@ Dir::glob("/Users/kei/tweet/sampling/**/*.csv").each do |f|
 end
 
 for n in 0..4
-  File.write("Parameter#{n}.train", outstring[n])
+  File.write("Parameter#{n}", outstring[n])
 end

@@ -4,7 +4,7 @@ per = []
 CSV.foreach("revised_data.csv") do |id|
   for x in 1..60
     case x
-    when 2,4,5,6,7,10,11,13,17,19,20,21,22,25,26,28,32,34,36,37,40,43,47,49,50,51,52,53,56,58,60
+    when 2,4,5,6,7,10,11,13,17,19,20,21,22,25,26,28,32,34,35,36,37,40,41,43,47,49,50,51,52,53,56,58,60
       per[x] = 5 - id[x+26].to_i
     else
       per[x] = id[x+26].to_i - 1
@@ -26,7 +26,5 @@ CSV.foreach("revised_data.csv") do |id|
     end
   end
 
-  File.open("per.csv", "a") do |f|
-    f.puts("#{id[0]},#{op},#{co},#{ex},#{ag},#{ne}")
-  end
+  puts("#{id[0]},#{op},#{co},#{ex},#{ag},#{ne},#{id[2]}")
 end

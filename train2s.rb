@@ -5,7 +5,7 @@ require 'svm'
 featnum = 500
 
 me = MeCab::Tagger.new
-ave = [28, 25, 23, 27, 27]
+ave = [28, 26, 23, 27, 28]
 #0:op 1:co 2:ex 3:ag 4:ne
 pa = Array.new(5)
 bow_list = Array.new(5){Array.new()}
@@ -52,9 +52,11 @@ Dir::glob("/Users/kei/tweet/sampling/**/*.csv").each do |f|
       node = node.next
       while node.next do
         feat = node.feature.split(",")
-        words << feat[6]
+        if !(feat[0] == ("名詞"||"動詞"))
+          words << feat[6]
+          count += 1
+        end
         node = node.next
-        count += 1
       end
     end
   end
@@ -78,12 +80,21 @@ Dir::glob("/Users/kei/tweet/sampling/**/*.csv").each do |f|
   CSV.foreach("per.csv") do |per|
     if id == per[0].to_i
       for n in 0..4
-        parameter = per[n+1].to_i
+        if(per[n+1].to_i <= ave[n])
+          parameter = -1
+        else
+          parameter = 1
+        end
         outstring[n] << "#{parameter}"
         for m in 0..featnum-1
           outstring[n] << " #{m+1}:#{bow[n][m]}"
         end
-        outstring[n] << "\n"
+        if per[6].to_i == 1
+          sex = -1
+        else
+          sex = 1000
+        end
+        outstring[n] << " #{featnum+1}:#{sex}\n"
       end
       break
     end

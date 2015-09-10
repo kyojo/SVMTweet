@@ -8,12 +8,7 @@ include Math
 allwd = []
 
 me = MeCab::Tagger.new
-ave = [28, 25, 23, 27, 27]
-pa = Array.new(5)
-#0:op 1:co 2:ex 3:ag 4:ne
-for n in 0..4
-  pa[n] = Classifier::Bayes.new("0","1")
-end
+ave = [28, 26, 23, 27, 28]
 np = Array.new(5, 0)
 nn = Array.new(5, 0)
 npw = Array.new(5){{}}
